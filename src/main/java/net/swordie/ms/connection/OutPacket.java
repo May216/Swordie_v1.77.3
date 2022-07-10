@@ -14,6 +14,8 @@ import org.apache.log4j.LogManager;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
+import static java.nio.charset.Charset.forName;
+
 public class OutPacket extends Packet {
     private ByteBuf baos;
     private boolean loopback = false;
@@ -184,8 +186,11 @@ public class OutPacket extends Packet {
             log.error("Tried to encode a string that is too big.");
             return;
         }
-        encodeShort((short) s.length());
-        encodeString(s, (short) s.length());
+        // encodeShort((short) s.length());
+        // encodeString(s, (short) s.length());
+        // 中文化
+        encodeShort((short) s.getBytes(forName("BIG5")).length);
+        encodeString(s, (short) s.getBytes(forName("BIG5")).length);
     }
 
     /**
@@ -199,12 +204,20 @@ public class OutPacket extends Packet {
         if (s == null) {
             s = "";
         }
-        if (s.length() > 0) {
-            for (char c : s.toCharArray()) {
-                encodeChar(c);
-            }
+        // if (s.length() > 0) {
+        //  for (char c : s.toCharArray()) {
+        //      encodeChar(c);
+        //  }
+        // }
+        // for (int i = s.length(); i < length; i++) {
+        //  encodeByte((byte) 0);
+        // }
+        // 中文化
+        if(s.getBytes(forName("BIG5")).length > length) {
+            s = s.substring(0, length);
         }
-        for (int i = s.length(); i < length; i++) {
+        encodeArr(s.getBytes(forName("BIG5")));
+        for(int i = s.getBytes(forName("BIG5")).length; i < length; i++) {
             encodeByte((byte) 0);
         }
     }

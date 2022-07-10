@@ -5,38 +5,38 @@ MINING_SKILL = 92010000
 FEE = [5000, 15000, 25000, 40000, 60000, 85000, 115000, 150000, 190000, 235000]
 
 if not sm.hasSkill(MINING_SKILL):
-    selection = sm.sendSay("Now what can I do for ya?\r\n#L0##bHear an explanation about #eMining#n.#l\r\n#L1#Learn #eMining#n.#k#l")
+    selection = sm.sendSay(u"現在我能為你做什麼？\r\n#L0##b聽聽關於#e採礦#n的說明#l\r\n#L1##r學習#e採礦#n技術#k#l")
     if selection == 0:
-        sm.sendNext("If you're looking to get yourself some minerals, all you need is the Mining skill. Refine the minerals you collect in one of them molds #p9031006# sells, then use them to craft all sorts of useful items.")
+        sm.sendNext(u"如果您想採集一些礦物，那麼您只需要學習採礦技術。使用模具和礦物來製作各種有用的物品。")
     elif selection == 1:
-        learn = sm.sendAskYesNo("Do you really want to learn #bMining#k? It'll cost you some money... #b5,000 Mesos#k, to be exact.\r\n")
+        learn = sm.sendAskYesNo(u"您真的想學習#b採礦#k嗎？這將花費您#b 5,000 楓幣#k。\r\n")
         if learn:
             if sm.getMesos() < 5000:
-                sm.sendNext("You don't got enough Mesos. I need #b5000 Mesos#k from every student, no exceptions.")
-                sm.dispose()
+                sm.sendNext(u"您沒有足夠的楓幣。我需要收取#b5000 楓幣#k。")
+                sm.dispose();
 
             sm.giveMesos(-5000)
             sm.giveSkill(MINING_SKILL, 0x1000000, 10)
             sm.playSound("profession/levelup")
-            sm.sendNext("Okay, them's the basics of Mining. Work on increasing your Mastery, and I'll teach you some new tricks.")
+            sm.sendNext(u"好的，這些是採礦的基礎知識。為使您更加精通採礦技術，我會教您一些新技巧。")
         else:
-            sm.sendNext("It's good to be cautious. Come back after you've thought it through.")
+            sm.sendNext(u"謹慎是很好的，您考慮一下之後再來找我。")
 else:
-    selection = sm.sendSay("Now what can I do for ya?\r\n#L2##bLevel up #eMining#n.#l\r\n#L3##bTrade #t4011010#.#k#l")
+    selection = sm.sendSay(u"現在你要做什麼？\r\n#L2##b升級#e採礦#n#l\r\n#L3##b交易#t4011010#.#k#l")
     if selection == 2:
         if sm.isAbleToLevelUpMakingSkill(MINING_SKILL):
-            levelup = sm.sendAskYesNo("Looks like you're ready to level up your Mining. I'll take #b" + str(FEE[sm.getMakingSkillLevel(MINING_SKILL)]) + " Mesos#k as tuition. Ready to learn?")
+            levelup = sm.sendAskYesNo(u"看起來您準備好升級採礦技術了。我會收取#b" + str(FEE[sm.getMakingSkillLevel(MINING_SKILL)]) + " 楓幣#k作為學費。準備學習了嗎？")
             if levelup:
                 if sm.getMesos() < FEE[sm.getMakingSkillLevel(MINING_SKILL)]:
-                    sm.sendNext("You don't have enough mesos.")
+                    sm.sendNext(u"您沒有足夠的楓幣。")
                     sm.dispose()
                 sm.giveMesos(-FEE[sm.getMakingSkillLevel(MINING_SKILL)])
                 sm.makingSkillLevelUp(MINING_SKILL)
-                sm.sendNext("Your Mining skill is now Lv. " + str(sm.getMakingSkillLevel(MINING_SKILL)) +".")
+                sm.sendNext(u"您的採礦技巧現在是LV." + str(sm.getMakingSkillLevel(MINING_SKILL)))
             else:
-                sm.sendNext("Sure, take some time to think it over. I'll be here.")
+                sm.sendNext(u"當然，您可以再多花一些時間考慮，我會一直在這。")
                 sm.dispose()
         else:
-            sm.sendNext("You're not ready to level up your Profession. Come back when you've increased your Mastery.")
+            sm.sendNext(u"您還沒有準備好升級技術，當您更加精通時再回來找我。")
     elif selection == 3:
-        sm.sendSayOkay("#b100 #t4011010#s#k can be traded for 1 #i2028067:##b#t2028067##k. Please dig up some more #t4011010#s.")
+        sm.sendSayOkay(u"#b100 #t4011010#s#k 可以兌換 1 個#i2028067:##b#t2028067##k。請挖掘更多#t4011010#.")
