@@ -20,7 +20,8 @@
 6. 開啟 moonlight.sln, 在專案中加入參考 -> `MySql.Data` (v8.0.29.0)
 7. Client.cs 檢查 MySqlConnection 資訊是否正確 `server=localhost;port=3306;username=root;password=;database=swordie`
 8. 選 release 後建置 moonlight 專案, 產生 moonlight.exe
-9. 把 `moonlight.exe` 丟入 client fodler 中後以管理員身分執行按 play 啟動遊戲
+9. 打開 src -> java -> net -> swordie -> main -> Server.java 之後 run code 就可以啟動 server
+10. 把 `moonlight.exe` 丟入 client fodler 中後以管理員身分執行按 play 啟動遊戲
 
 ## 修改項目
 
